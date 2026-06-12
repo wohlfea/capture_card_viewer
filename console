@@ -1,0 +1,26 @@
+#!/bin/sh
+# Low-latency Elgato HD60 S+ viewer: ffplay for video, pactl for audio
+# v4l2-ctl --list-devices  -- This will list the video input devices
+# pactl list sources short -- This will find audio devices
+
+VIDEO=/dev/video2
+AUDIO=alsa_input.usb-Elgato_Game_Capture_HD60_S__0004F0D20C000-03.analog-stereo
+
+# Start the loop and save the Module ID number
+LOOP_MOD=$(pactl load-module module-loopback source=$AUDIO)
+echo $LOOP_MOD
+
+# Trap will now unload the exact module ID when the script exits
+trap '
+    pactl unload-module "$LOOP_MOD" 2>/dev/null
+    trap - INT
+    kill -INT $$
+' INT
+
+# while true; do sleep 1; done
+
+ffplay -loglevel warning \
+    -fflags nobuffer -flags low_delay -framedrop \
+    -f v4l2 -input_format yuyv422 -framerate 240 \
+    -window_title console \
+    $VIDEO
