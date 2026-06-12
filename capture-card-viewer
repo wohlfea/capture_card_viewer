@@ -22,5 +22,5 @@ trap '
 ffplay -loglevel warning \
     -fflags nobuffer -flags low_delay -framedrop \
     -f v4l2 -input_format yuyv422 -framerate 240 \
-    -window_title console \
+    -window_title capture-card-viewer \
     $VIDEO

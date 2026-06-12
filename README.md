@@ -1,4 +1,4 @@
-# console
+# capture-card-viewer
 
 A dead-simple, low-latency viewer for a USB HDMI capture card on Linux. It uses
 [`ffplay`](https://ffmpeg.org/ffplay.html) to display the video and
@@ -32,16 +32,16 @@ sudo pacman -S ffmpeg v4l-utils libpulse
 ## Usage
 
 ```sh
-./console
+./capture-card-viewer
 ```
 
-A window titled `console` opens with your capture feed. Press `q` or close the
+A window titled `capture-card-viewer` opens with your capture feed. Press `q` or close the
 window to quit. On exit the script unloads the audio loopback module it created,
 so it cleans up after itself.
 
 ## Configuration
 
-Open the `console` script and set these two variables near the top:
+Open the `capture-card-viewer` script and set these two variables near the top:
 
 ```sh
 VIDEO=/dev/video2
